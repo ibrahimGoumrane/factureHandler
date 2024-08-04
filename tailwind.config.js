@@ -23,6 +23,9 @@ export default {
             'fade-in-scale': 'fade-in-scale 0.1s ease-out forwards',
             'fade-out-scale': 'fade-out-scale 0.075s ease-in forwards',
         },
+        dropShadow: {
+            'custom-blue': '0 20px 20px rgba(147, 197, 253, 0.5)', // Blue-300 with 50% opacity
+        },
     },
   },
   plugins: [

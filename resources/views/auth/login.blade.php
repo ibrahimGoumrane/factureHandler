@@ -8,8 +8,10 @@
         <x-buttonSubmit>
             Login in
         </x-buttonSubmit>
-        <x-form-link href="register" label="Sign Up">
+        <x-form-link :href="route('register')" label="Sign Up">
             Dont have an Account?
+        </x-form-link>
+        <x-form-link :href="route('home')" label="Go back to home">
         </x-form-link>
     </x-form>
 </x-layoutLoginSignUp>

@@ -41,9 +41,8 @@ class RegistredUserController extends Controller
                 $attrs = $request->validate([
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
-                    'age' => ['required', 'numeric', 'min:18'],
                     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-                    'password' => ['required', Password::min(8)->letters()->numbers(), 'confirmed'],
+                    'password' => ['required', Password::min(8)->letters()->numbers()->mixedCase(), 'confirmed'],
                 ]);
 
                 // Create a new user with the validated data

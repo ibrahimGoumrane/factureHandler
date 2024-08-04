@@ -21,7 +21,7 @@
     </div>
 @else
     <div>
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">{{$label}}</label>
         <div class="mt-2">
             <input id="{{$name}}" name="{{$name}}" type="{{$type}}" autocomplete="{{$autocomplete}}" class="{{$classes}}" placeholder="{{$placeholder}}">
         </div>

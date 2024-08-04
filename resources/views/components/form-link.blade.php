@@ -2,10 +2,7 @@
     'href' => '#',
     'label' => 'no data',
 ])
-@php
-$href = '/facturehandler/public/'. $href;
-@endphp
-<p class="mt-10 text-center text-sm text-gray-500">
+<p class="text-center text-sm text-gray-900">
     {{$slot}}
-    <a href="{{$href}}" class="font-semibold leading-6 text-blue-500/90 hover:text-blue-500/90">{{$label}}</a>
+    <a href="{{$href}}" class="pl-2 font-semibold leading-6 text-blue-500 hover:text-blue-400">{{$label}}</a>
 </p>

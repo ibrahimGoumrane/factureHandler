@@ -6,14 +6,14 @@
 @php
     $classes = '';
     if ( $phone ) {
-    $classes = 'block rounded-md px-3 py-2 text-base font-medium';
+    $classes = 'block rounded-md px-3 py-2 text-base font-medium text-slate-900';
     }else{
-    $classes = 'rounded-md px-3 py-2 text-sm font-medium ';
+    $classes = 'rounded-md px-3 py-2 text-sm font-medium text-slate-900';
     }
     if ($active) {
-        $classes .= ' text-white bg-blue-600';
+        $classes .= ' bg-blue-600';
     } else {
-        $classes .= ' text-white hover:bg-blue-500 hover:text-white';
+        $classes .= ' hover:bg-blue-500 hover:text-white';
     }
 @endphp
 

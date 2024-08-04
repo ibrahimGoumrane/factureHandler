@@ -9,13 +9,15 @@
     @vite('resources/css/app.css')
     <title>Facture Handler</title>
 </head>
-    <body class="h-full font-hanken-grotesk ">
-        <div class="flex min-h-full flex-col justify-start px-6 lg:px-8">
-            <div class="sm:mx-auto sm:w-full sm:max-w-sm h-[20vh] flex flex-col  justify-start ">
-                <img class="mx-auto h-20 w-auto pt-8  " src="{{ asset('images/logo-mail.png') }}" alt="Numerique Way" >
-                <h2 class=" text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 mt-auto">{{$heading}}</h2>
+    <body class="h-full font-hanken-grotesk bg-slate-900">
+        <div class="flex min-h-full flex-col justify-center ">
+            <div class="bg-white w-1/3 mx-auto p-5 rounded-xl">
+                <div class="sm:mx-auto sm:w-full sm:max-w-sm h-[20vh] flex flex-col  justify-start ">
+                    <img class="mx-auto h-40 w-auto pt-8 " src="{{ asset('images/logo-mail.png') }}" alt="Numerique Way" >
+                    <h2 class=" text-center text-2xl font-bold leading-9 tracking-tight  mt-auto">{{$heading}}</h2>
+                </div>
+                {{ $slot }}
             </div>
-        {{ $slot }}
         </div>
     </body>
 </html>
