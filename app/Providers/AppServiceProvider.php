@@ -22,6 +22,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('mainNavigation.index', 'mainNav');
+        Blade::component('homeNotLoggedIn.AboutUs', 'AboutUs');
+        Blade::component('homeNotLoggedIn.hero', 'heroNotLoggedIn');
+        Blade::component('homeNotLoggedIn.contactUs', 'contactUs');
+        Blade::component('homeNotLoggedIn.footer', 'footerNotLoggedIn');
+        Blade::component('caise.index', 'caise');
+        Blade::component('caise.Dashboard', 'mainDashboard');
+
         Model::unguard();
     }
 }

@@ -5,7 +5,8 @@ use App\Http\Controllers\RegistredUserController;
 use Illuminate\Support\Facades\Route;
 
 //Route to the home page
-Route::view('/', 'home')->name('home');
+Route::view('/', 'homeNotLoggedIn/index')->name('home');
+Route::view('/caise', 'caise.index')->name('caise');
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 });

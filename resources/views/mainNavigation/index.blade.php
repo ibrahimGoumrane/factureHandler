@@ -1,4 +1,4 @@
-<nav class="fixed py-3 w-screen  ">
+<nav class="fixed py-3 w-screen z-50">
     <div class="mx-auto max-w-[90vw] px-2 sm:px-6  lg:py-2 bg-slate-100 drop-shadow-custom-blue  rounded-md ">
         <div class="relative flex h-16 items-center justify-between">
                 <!-- Mobile menu button-->
@@ -31,6 +31,7 @@
                         <x-navigationMain.link :active="request()->is('/dashboard')">Dashboard</x-navigationMain.link>
                         <x-navigationMain.link :active="request()->is('/team')">Team</x-navigationMain.link>
                         <x-navigationMain.link :active="request()->is('/calendar')">Calendar</x-navigationMain.link>
+                        <x-navigationMain.link :active="request()->is('/caise')" :href="route('caise')">Caise</x-navigationMain.link>
                     </div>
                 </div>
             </div>
@@ -64,7 +65,6 @@
         const menuCloseIcon = document.getElementById('menu-close-icon');
         menuButton.addEventListener('click', function() {
             const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-            console.log(12)
             // Toggle the menu visibility
             if (isExpanded) {
                 mobileMenu.hidden = true;

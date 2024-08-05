@@ -1,3 +1,4 @@
+@props(['type' => 'submit'])
 
 @php
     $classes="flex w-full justify-center rounded-md bg-blue-500/90
@@ -6,7 +7,7 @@
       focus-visible:outline-offset-2 focus-visible:outline-blue-500/90 ";
 @endphp
 <div>
-    <button type="submit" class="{{$classes}}" >
+    <button type="{{$type}}" class="{{$classes}}" >
         {{$slot}}
     </button>
 </div>
