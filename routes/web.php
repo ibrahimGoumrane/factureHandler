@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 //Route to the home page
 Route::view('/', 'homeNotLoggedIn/index')->name('home');
-Route::view('/caise', 'caise.index')->name('caise');
+Route::get('/caisse', [\App\Http\Controllers\CaisseController::class, 'index'])->name('caisse.index');
+
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 });

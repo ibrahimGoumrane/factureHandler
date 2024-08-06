@@ -28,10 +28,10 @@
                 </div>
                 <div class="hidden sm:ml-6 sm:flex items-center justify-center ">
                     <div class="flex space-x-4 items-center justify-center">
-                        <x-navigationMain.link :active="request()->is('/dashboard')">Dashboard</x-navigationMain.link>
+                        <x-navigationMain.link :active="request()->is('/dashboard')" :href="route('home')">Dashboard</x-navigationMain.link>
                         <x-navigationMain.link :active="request()->is('/team')">Team</x-navigationMain.link>
                         <x-navigationMain.link :active="request()->is('/calendar')">Calendar</x-navigationMain.link>
-                        <x-navigationMain.link :active="request()->is('/caise')" :href="route('caise')">Caise</x-navigationMain.link>
+                        <x-navigationMain.link :active="request()->is('/caisse')" :href="route('caisse.index')">Caise</x-navigationMain.link>
                     </div>
                 </div>
             </div>

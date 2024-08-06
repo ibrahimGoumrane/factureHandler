@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\CaisseDataTable;
 use App\Models\caisse;
 use App\Http\Requests\StorecaisseRequest;
 use App\Http\Requests\UpdatecaisseRequest;
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Services\DataTable;
+use function view;
 
 class CaisseController extends Controller
 {
@@ -13,8 +18,12 @@ class CaisseController extends Controller
      */
     public function index()
     {
-        //
+        $caisses = Caisse::all();
+        return view('caisse.index' ,[
+            'caisses' => $caisses
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

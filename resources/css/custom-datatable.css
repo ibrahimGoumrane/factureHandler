@@ -1,0 +1,70 @@
+.table-fixed {
+    width: 100%; /* Adjust to your needs, or set a specific width */
+    max-width: 100%; /* Maximum width for the table */
+    table-layout: fixed; /* Use fixed layout for consistent column sizes */
+    border-collapse: collapse; /* Optional: for cleaner look */
+    background: white;
+    min-height: 100%;
+}
+
+/* Specify fixed width for all columns */
+.table-fixed th,
+.table-fixed td {
+    width: 200px; /* Fixed width for all columns */
+    word-wrap: break-word; /* Ensure content wraps within the cell */
+    border: 1px solid #ccc; /* Optional: for visual clarity */
+    padding: 8px; /* Optional: for spacing */
+    min-height: 100px;
+}
+.table-fixed tr {
+    height: 80px;
+}
+.overflow-container {
+    height: 100%; /* Ensure container takes up full cell height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+#table_wrapper #table_length label select , #table_wrapper #table_filter label input {
+    border: 2px solid black;
+    padding-inline: 20px;
+    width: auto;
+    margin-left: 10px;
+}
+#table_wrapper #table_length label , #table_wrapper #table_filter label   {
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+
+}
+#table_wrapper #table_length  , #table_wrapper #table_filter   {
+    margin-bottom: 10px;
+}
+
+
+#table_wrapper #table_info {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(59, 130, 246, 0.68);
+}
+
+#table_wrapper #table_paginate #table_previous,
+#table_wrapper #table_paginate #table_next {
+    outline: none;
+    background: #3b82f6;
+    color: white !important;
+    transition: all 0.3s ease-in-out 0.1s;
+    cursor: pointer;
+    font-weight: bold;
+
+}
+#table_wrapper #table_paginate #table_previous:hover,
+#table_wrapper #table_paginate #table_next:hover {
+    background: rgba(59, 130, 246, 0.64) !important;
+    color: white !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: rgba(59, 130, 246, 0.64) !important;
+    color: white !important;
+    border: none;
+}
