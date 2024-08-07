@@ -21,6 +21,19 @@
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
+            jQuery.extend(jQuery.fn.dataTable.ext.type.order, {
+                "date-dmy-pre": function (date) {
+                    const dmy = date.split('/');
+                    return (dmy[2] + dmy[1] + dmy[0]) * 1;
+                },
+                "date-dmy-asc": function (a, b) {
+                    return a - b;
+                },
+                "date-dmy-desc": function (a, b) {
+                    return b - a;
+                }
+            });
+
             $('#table').DataTable({
                 "paging": true,
                 "ordering": true,
@@ -29,6 +42,29 @@
                 "lengthChange": true,
                 "pageLength": 5,
                 "lengthMenu": [5, 10, 25, 50, 75, 100],
+                "columnDefs": [
+                    { "orderable": false, "targets": [ 2, 4] }, // Disable sorting for these columns
+                    { "searchable": false, "targets": [0 , 4] }, // Optional: Disable searching for these columns
+                    { "type": "date-dmy", "targets": 1 }
+                ],
+                "createdRow": function(row, data, dataIndex) {
+                    // Apply styling to odd and even columns
+                    $(row).find('td').each(function(index) {
+                        if (index % 2 === 0) {
+                            // Apply styles to even columns
+                            $(this).css({
+                                'background-color': '#ffffff', /* White background */
+                                'color': '#000' /* Black text color */
+                            });
+                        } else {
+                            // Apply styles to odd columns
+                            $(this).css({
+                                'background-color': '#bae6fd', /* Light gray background */
+                                'color': 'black' /* Dark text color */
+                            });
+                        }
+                    });
+                },
                 "language": {
                     "lengthMenu": "Afficher _MENU_ ",
                     "zeroRecords": "Aucun élément trouvé",

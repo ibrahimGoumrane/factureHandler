@@ -19,10 +19,10 @@
 .table-fixed tr {
     height: 80px;
 }
-.overflow-container {
+.scrollable-container {
     height: 100%; /* Ensure container takes up full cell height */
     overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Disable horizontal scrolling */
+    overflow-x: auto; /* Disable horizontal scrolling */
 }
 
 #table_wrapper #table_length label select , #table_wrapper #table_filter label input {
@@ -68,3 +68,4 @@
     color: white !important;
     border: none;
 }
+

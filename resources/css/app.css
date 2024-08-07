@@ -4,7 +4,7 @@
 .scrollable-container {
     padding-right: 10px; /* Space for the vertical scrollbar */
     padding-bottom: 10px; /* Space for the horizontal scrollbar */
-    overflow: auto; /* Enable scrolling */
+    overflow: hidden; /* Enable scrolling */
 }
 
 /* Custom Scrollbar Styles */
@@ -32,5 +32,4 @@
     outline: 2px solid transparent;
     --tw-ring-shadow: none;
     border: 2px solid black;
-
 }
