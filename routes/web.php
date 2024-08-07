@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Route;
 
 //Route to the home page
 Route::view('/', 'homeNotLoggedIn/index')->name('home');
-Route::get('/caisse', [\App\Http\Controllers\CaisseController::class, 'index'])->name('caisse.index');
 
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/caisse', [\App\Http\Controllers\CaisseController::class, 'index'])->name('caisse.index');
+    Route::get('/caisse/create', [\App\Http\Controllers\CaisseController::class, 'create'])->name('caisse.create');
+    Route::post('/caisse', [\App\Http\Controllers\CaisseController::class, 'store'])->name('caisse.store');
 });
 
 //Controller used to log in and log out

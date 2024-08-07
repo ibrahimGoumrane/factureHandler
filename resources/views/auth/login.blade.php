@@ -1,4 +1,4 @@
-<x-layoutLoginSignUp>
+<x-layoutForm>
     <x-slot:heading>
         Sign in to your Account
     </x-slot:heading>
@@ -14,4 +14,4 @@
         <x-form-link :href="route('home')" label="Go back to home">
         </x-form-link>
     </x-form>
-</x-layoutLoginSignUp>
+</x-layoutForm>

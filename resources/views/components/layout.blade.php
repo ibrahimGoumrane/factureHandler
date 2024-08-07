@@ -13,8 +13,22 @@
     <title>Facture Handler</title>
 </head>
 <body class="overflow-hidden">
-    {{$slot}}
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
 
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    {{$slot}}
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- DataTables JS -->
@@ -67,9 +81,9 @@
                 },
                 "language": {
                     "lengthMenu": "Afficher _MENU_ ",
-                    "zeroRecords": "Aucun élément trouvé",
+                    "zeroRecords": "<div class='text-xl font-bold block text-center'>Entrer un nouveau enregistrment</div>",
                     "info": "Page _PAGE_ sur _PAGES_",
-                    "infoEmpty": "Aucun élément disponible",
+                    "infoEmpty": "<div class='text-xl font-bold block text-center'>Aucun element disponible</div>",
                     "infoFiltered": "(filtré sur _MAX_ éléments)",
                     "search": "Rechercher :",
                     "paginate": {

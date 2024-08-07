@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('montant');
             $table->dateTime('date');
             $table->string('AcheterPar');
+            $table->string('pieceJointe')->nullable();
             $table->timestamps();
         });
     }

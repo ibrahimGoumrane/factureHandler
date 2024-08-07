@@ -23,7 +23,7 @@ class CaisseFactory extends Factory
             'montant' => $this->faker->randomFloat(2, 0, 1000),
             'date'  => $this->faker->date(),
             'AcheterPar' => $this->faker->name,
-
+            'pieceJointe' => $this->faker->image(),
         ];
     }
 }
