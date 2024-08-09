@@ -2,6 +2,7 @@
 export default {
   content: [
       "./resources/**/*.blade.php",
+      "./node_modules/flowbite/**/*.js",
       "./resources/**/*.js",
       './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
   ],
@@ -31,6 +32,7 @@ export default {
   },
   plugins: [
       require('@tailwindcss/forms'),
+      require('flowbite/plugin'),
   ],
 }
 

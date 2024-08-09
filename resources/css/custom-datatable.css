@@ -24,9 +24,12 @@
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: auto; /* Disable horizontal scrolling */
 }
-
+#table_wrapper #table_length label, #table_wrapper #table_filter label{
+    display: flex;
+}
 #table_wrapper #table_length label select , #table_wrapper #table_filter label input {
-    border: 2px solid black;
+    border: 1px solid black;
+    color:#475569;
     padding-inline: 20px;
     width: auto;
     margin-left: 10px;

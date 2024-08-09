@@ -6,7 +6,6 @@
 {{--            <x-AboutUs />--}}
 {{--            <x-contactUs />--}}
 {{--            <x-footerNotLoggedIn />--}}
-
         </div>
     </main>
 </x-layout>

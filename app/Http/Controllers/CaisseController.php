@@ -7,20 +7,31 @@ use App\Models\caisse;
 use App\Http\Requests\StorecaisseRequest;
 use App\Http\Requests\UpdatecaisseRequest;
 use Error;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Services\DataTable;
 use function redirect;
 use function view;
+use Carbon\Carbon;
+
 
 class CaisseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($year = null, $month = null)
     {
-        $caisses = Caisse::all();
+        Carbon::setLocale('fr_MA');
+        if (is_null($year) || is_null($month)) {
+            $year = Carbon::now()->year;
+            $month = Carbon::now()->month;
+        }
+        $caisses = Caisse::whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->get();
         return view('caisse.index' ,[
             'caisses' => $caisses
         ]);
@@ -50,7 +61,7 @@ class CaisseController extends Controller
         if($request->hasFile('pieceJointe')) {
             $file = $request->file('pieceJointe');
             $fileName = time().'_'.$file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads', $fileName, 'public');
+            $filePath = $file->storeAs('uploads/pieceJoint', $fileName, 'public');
             $caisse->pieceJointe = '/storage/' . $filePath;
         }
             $caisse->libelle = $validatedData['libelle'];
@@ -92,6 +103,30 @@ class CaisseController extends Controller
     {
         //
     }
+
+    /**
+     * Upload the specific Caisse piece Joint
+     */
+    public function upload($id)
+    {
+        try {
+            // Retrieve the Caisse record
+            $caisse = Caisse::findOrFail($id);
+
+            // Ensure no leading slash in pieceJointe
+            $filePath =  ltrim($caisse->pieceJointe, '/');
+//            dd($filePath);
+            // Check if the file exists
+            if (file_exists($filePath)) {
+                return response()->download($filePath);
+            } else {
+                return response()->json(['error' => 'File not found'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving file: ' . $e->getMessage()], 500);
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.

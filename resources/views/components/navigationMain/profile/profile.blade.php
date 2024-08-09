@@ -19,9 +19,12 @@
         aria-labelledby="user-menu-button"
         tabindex="-1"
     >
-        <x-navigationMain.menu-item :active="request()->is('/profile') ? 'active' : ''">Profile</x-navigationMain.menu-item>
-        <x-navigationMain.menu-item :active="request()->is('/settings') ? 'active' : ''">Settings</x-navigationMain.menu-item>
-        <x-navigationMain.menu-item >Sign out</x-navigationMain.menu-item>
+        <x-form method="POST"  id="delete-form" action="logout" class=" hidden"></x-form>
+        <x-navigationMain.menu-item :active="request()->is('/profile')">Profile</x-navigationMain.menu-item>
+        <x-navigationMain.menu-item :active="request()->is('/settings')">Parametre</x-navigationMain.menu-item>
+        <span class="block px-4 py-2 text-sm text-gray-700 active:bg-blue-300"><button type="submit" form="delete-form">Log Out</button></span>
+
+
     </div>
 </div>
 

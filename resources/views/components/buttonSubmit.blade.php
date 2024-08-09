@@ -1,13 +1,12 @@
-@props(['type' => 'submit'])
+@props(['type' => 'submit' , 'bgColor' => 'bg-blue-500/90' ,'color'=>'text-white' , 'hoverBgColor'=>'hover:bg-blue-400/90'])
 
 @php
-    $classes="flex  min-w-[80px] w-full justify-center rounded-md bg-blue-500/90
-     px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm
-      hover:bg-blue-400/90 focus-visible:outline focus-visible:outline-2
-      focus-visible:outline-offset-2 focus-visible:outline-blue-500/90 ";
+    $classes=" min-h-12 min-w-12 font-bold flex items-center justify-center  w-full  rounded-md
+      px-3 py-1.5 text-sm  leading-6  shadow-sm
+      hover:bg-blue-400/90 focus:outline-none ";
 @endphp
 <div>
-    <button type="{{$type}}" class="{{$classes}}" >
+    <button type="{{$type}}" class="{{$classes . $bgColor. ' ' . $color . ' ' . $hoverBgColor}}" >
         {{$slot}}
     </button>
 </div>

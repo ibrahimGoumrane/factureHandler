@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('homeNotLoggedIn.hero', 'heroNotLoggedIn');
         Blade::component('homeNotLoggedIn.contactUs', 'contactUs');
         Blade::component('homeNotLoggedIn.footer', 'footerNotLoggedIn');
-
+        Blade::component('caisse.create', 'caisse-create');
+        Blade::component('caisse.monthFilter', 'caisse-filter');
         Model::unguard();
     }
 }

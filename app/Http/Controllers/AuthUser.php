@@ -75,5 +75,7 @@ class AuthUser extends Controller
     public function destroy(){
         auth()->logout();
         return redirect('/');
-    }
+    }/**
+     * Remove the specified resource from storage.
+     */
 }
