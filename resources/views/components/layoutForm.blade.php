@@ -9,8 +9,8 @@
     @vite('resources/css/app.css')
     <title>Facture Handler</title>
 </head>
-    <body class="h-full font-hanken-grotesk bg-slate-900">
-        <div class="flex min-h-full flex-col justify-center ">
+    <body class="h-full font-hanken-grotesk bg-slate-900 overflow-hidden">
+        <div class="flex min-h-screen flex-col justify-center ">
             <div class="bg-white w-1/3 mx-auto p-5 rounded-xl">
                 <div class="sm:mx-auto sm:w-full sm:max-w-sm h-[20vh] flex flex-col  justify-start ">
                     <img class="mx-auto h-40 w-auto pt-8 " src="{{ asset('images/logo-mail.png') }}" alt="Numerique Way" >

@@ -12,7 +12,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Services\DataTable;
+use function auth;
+use function dd;
+use function file_exists;
+use function ltrim;
+use function now;
 use function redirect;
+use function time;
+use function trim;
+use function unlink;
 use function view;
 use Carbon\Carbon;
 
@@ -22,21 +30,30 @@ class CaisseController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index($year = null, $month = null)
     {
         Carbon::setLocale('fr_MA');
-        if (is_null($year) || is_null($month)) {
-            $year = Carbon::now()->year;
-            $month = Carbon::now()->month;
+
+        // Set default year and month if not provided
+        $year = $year ? (int) $year : Carbon::now()->year;
+        $month = $month ? (int) $month +1 : Carbon::now()->month;
+
+        // Validate year and month
+        if ($year < 1 || $month < 1 || $month > 12) {
+            return redirect()->route('caisse.index')
+                ->with('error', 'Invalid year or month.');
         }
+
+        // Retrieve caisses for the specified year and month
         $caisses = Caisse::whereYear('date', $year)
             ->whereMonth('date', $month)
             ->get();
-        return view('caisse.index' ,[
+
+        return view('caisse.index', [
             'caisses' => $caisses
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -99,10 +116,53 @@ class CaisseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatecaisseRequest $request, caisse $caisse)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            // Validate the request data
+            $validatedData = $request->validate([
+                'montant' => ['required', 'numeric'],
+                'libelle' => 'required',
+                'AcheterPar' => 'required',
+                'pieceJointe' => 'mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
+            ]);
+            $caisse = Caisse::findOrFail($id);
+            // Initialize $pieceJointe as the current file path
+            $pieceJointe = $caisse->pieceJointe;
+            $existingPieceJointe = ltrim($pieceJointe, '/');
+
+            // Check if a new file is being uploaded
+            if ($request->hasFile('pieceJointe')) {
+                $file = $request->file('pieceJointe');
+
+                // Delete the existing file if it exists
+                if ($existingPieceJointe && file_exists(public_path($existingPieceJointe))) {
+                    unlink(public_path($existingPieceJointe));
+                }
+
+                // Store the new file
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('uploads/pieceJoint', $fileName, 'public');
+                $pieceJointe = '/storage/' . $filePath;
+            }
+
+            // Update the caisse record
+            $caisse->update([
+                'libelle' => $validatedData['libelle'],
+                'montant' => $validatedData['montant'],
+                'AcheterPar' => $validatedData['AcheterPar'],
+                'pieceJointe' => $pieceJointe,
+                'date' => now(),
+                'user_id' => auth()->id()
+            ]);
+
+            return redirect()->route('caisse.index')
+                ->with('success', 'mise a jour avec success.');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'mise a jour avec erreur: ' . $e->getMessage()], 500);
+        }
     }
+
 
     /**
      * Upload the specific Caisse piece Joint
@@ -115,7 +175,6 @@ class CaisseController extends Controller
 
             // Ensure no leading slash in pieceJointe
             $filePath =  ltrim($caisse->pieceJointe, '/');
-//            dd($filePath);
             // Check if the file exists
             if (file_exists($filePath)) {
                 return response()->download($filePath);
@@ -131,8 +190,20 @@ class CaisseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(caisse $caisse)
+    public function destroy($id)
     {
-        //
+        try{
+            $caisse = Caisse::findOrFail($id);
+            $pieceJointe = $caisse->pieceJointe;
+            $existingPieceJointe = ltrim($pieceJointe, '/');
+            if ($existingPieceJointe && file_exists(public_path($existingPieceJointe))) {
+                unlink(public_path($existingPieceJointe));
+            }
+            $caisse->delete();
+            return redirect()->route('caisse.index')
+                ->with('success', 'enregistrement est supprime.');
+        }catch(\Exception $e){
+            return response()->json(['error' => 'Error Deleting record: ' . $e->getMessage()], 500);
+        }
     }
 }
