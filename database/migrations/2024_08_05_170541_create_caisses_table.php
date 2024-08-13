@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('caisses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->noActionOnDelete();
-            $table->string('libelle');
-            $table->integer('montant');
+            $table->string('libelle')->unique();
+            $table->string('nature');
+            $table->integer('debit')->nullable();
+            $table->integer('credit')->nullable();
             $table->dateTime('date');
             $table->string('AcheterPar');
             $table->string('pieceJointe')->nullable();

@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('caisse.create', 'caisse-create');
         Blade::component('caisse.monthFilter', 'caisse-filter');
         Blade::component('caisse.update', 'caisse-update');
+        Blade::component('caisse.totalMonth', 'caisse-total');
         Model::unguard();
     }
 }

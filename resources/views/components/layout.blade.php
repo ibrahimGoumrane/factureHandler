@@ -33,7 +33,7 @@
         </div>
     @endif
 
-    @if (count($errors) > 0)
+    @if ($errors->any())
         @foreach ($errors->all() as $error)
             <div id="toast-danger" class="z-50 fixed bottom-0 right-0  flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
                 <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
@@ -83,8 +83,8 @@
                 "pageLength": 5,
                 "lengthMenu": [5, 10, 25, 50, 75, 100],
                 "columnDefs": [
-                    { "orderable": false, "targets": [0 , 2 , 5 , 6] }, // Disable sorting for these columns
-                    { "searchable": false, "targets": [0 , 2 , 5 , 6] }, // Optional: Disable searching for these columns
+                    { "orderable": false, "targets": [ 0 , 2 , 5 , 6 ] }, // Disable sorting for these columns
+                    { "searchable": false, "targets": [6 , 7] }, // Optional: Disable searching for these columns
                     { "type": "date-dmy", "targets": 1 }
                 ],
                 "createdRow": function(row, data, dataIndex) {

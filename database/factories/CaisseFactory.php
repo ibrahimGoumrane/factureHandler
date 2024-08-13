@@ -19,8 +19,10 @@ class CaisseFactory extends Factory
     {
         return [
             'libelle' => $this->faker->text,
+            'nature' => $this->faker->text,
             'user_id' => User::factory(),
-            'montant' => $this->faker->randomFloat(2, 0, 1000),
+            'debit' => $this->faker->randomFloat(2, 0, 1000),
+            'credit' => $this->faker->randomFloat(2, 0, 1000),
             'date'  => $this->faker->date(),
             'AcheterPar' => $this->faker->name,
             'pieceJointe' => $this->faker->image(),

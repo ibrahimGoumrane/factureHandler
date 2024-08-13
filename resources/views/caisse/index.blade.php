@@ -29,6 +29,7 @@
             <main class="max-w-[95vw]   overflow-hidden ">
                 <div class="flex items-center justify-between gap-x-2 mb-4">
                     <x-caisse-filter />
+                    <x-caisse-total />
                     <x-caisse-create />
 
                 </div>

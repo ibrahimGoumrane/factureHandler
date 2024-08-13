@@ -1,4 +1,4 @@
-@props(['type' => 'submit' , 'bgColor' => 'bg-blue-500/90' ,'color'=>'text-white' , 'hoverBgColor'=>'hover:bg-blue-400/90'])
+@props(['type' => 'submit' , 'bgColor' => 'bg-blue-500/90' ,'color'=>'text-white' , 'hoverBgColor'=>'hover:bg-blue-400/90' ,'id'=>'submit'])
 
 @php
     $classes=" min-h-12 min-w-12 font-bold flex items-center justify-center  w-full  rounded-md
@@ -6,7 +6,7 @@
       hover:bg-blue-400/90 focus:outline-none ";
 @endphp
 <div>
-    <button type="{{$type}}" class="{{$classes . $bgColor. ' ' . $color . ' ' . $hoverBgColor}}" >
+    <button type="{{$type}}" class="{{$classes . $bgColor. ' ' . $color . ' ' . $hoverBgColor}}" id="{{$id}}" >
         {{$slot}}
     </button>
 </div>

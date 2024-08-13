@@ -11,14 +11,14 @@
     <div class="flex items-start justify-start scrollable-container max-w-full max-h-[60vh]">
         <table class="display table-fixed dataTables_wrapper " id="table">
             <x-caise.C.caise-thead>
-                <x-caise.C.caise-th  style="width: 10px;">ID</x-caise.C.caise-th>
-                <x-caise.C.caise-th style="width: 30px;">Date</x-caise.C.caise-th>
-                <x-caise.C.caise-th style="width: 100px;">Libelle</x-caise.C.caise-th>
+                <x-caise.C.caise-th style="width: 50px;">Libelle</x-caise.C.caise-th>
                 <x-caise.C.caise-th style="width: 30px;">Nature</x-caise.C.caise-th>
-                <x-caise.C.caise-th style="width: 25px;">Montant</x-caise.C.caise-th>
-                <x-caise.C.caise-th style="width: 100px;">Acheter Par</x-caise.C.caise-th>
-                <x-caise.C.caise-th position="right" style="width: 60px; ">Piece Joint</x-caise.C.caise-th>
-                <x-caise.C.caise-th position="right" style="width: 60px; ">Actions</x-caise.C.caise-th>
+                <x-caise.C.caise-th style="width: 40px;">Date</x-caise.C.caise-th>
+                <x-caise.C.caise-th style="width: 40px;">Debit</x-caise.C.caise-th>
+                <x-caise.C.caise-th style="width: 40px;">Credit</x-caise.C.caise-th>
+                <x-caise.C.caise-th style="width: 50px;">Acheter Par</x-caise.C.caise-th>
+                <x-caise.C.caise-th position="right" style="width: 50px; ">Piece Joint</x-caise.C.caise-th>
+                <x-caise.C.caise-th position="right" style="width: 50px; ">Actions</x-caise.C.caise-th>
             </x-caise.C.caise-thead>
             <x-caise.C.caise-tbody>
                 @if(isset($caisses) && $caisses->count() !== 0)
@@ -28,14 +28,16 @@
                             $fmt = new NumberFormatter("en_US", NumberFormatter::DECIMAL);
                             $fmt->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, 2);
                             $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 2);
-                            $montant = $fmt->format($caisse->montant);
+                            $credit = $fmt->format($caisse->credit);
+                            $debit = $fmt->format($caisse->debit);
+                            $openModalButton = 'openModalButton'.$caisse->id;
                         @endphp
                         <tr>
-                            <x-caise.C.caise-td class="dt-body-left" :bold="true">{{ $caisse->id }}</x-caise.C.caise-td>
-                            <x-caise.C.caise-td class="dt-body-left">{{ $date }}</x-caise.C.caise-td>
                             <x-caise.C.caise-td class="dt-body-left" :bold="true">{{ $caisse->libelle }}</x-caise.C.caise-td>
-                            <x-caise.C.caise-td class="dt-body-left" :bold="true">No data found</x-caise.C.caise-td>
-                            <x-caise.C.caise-td class="dt-body-left">{{ $montant }} DH</x-caise.C.caise-td>
+                            <x-caise.C.caise-td class="dt-body-left" :bold="true">{{ $caisse->nature }}</x-caise.C.caise-td>
+                            <x-caise.C.caise-td class="dt-body-left">{{ $date }}</x-caise.C.caise-td>
+                            <x-caise.C.caise-td class="dt-body-left">{{ $debit }} DH</x-caise.C.caise-td>
+                            <x-caise.C.caise-td class="dt-body-left">{{ $credit }} DH</x-caise.C.caise-td>
                             <x-caise.C.caise-td class="dt-body-left" :bold="true">{{ $caisse->AcheterPar }}</x-caise.C.caise-td>
                             <x-caise.C.caise-td class="dt-body-left">
                                 @if(isset($caisse->pieceJointe))
@@ -56,9 +58,9 @@
                                 <div class="hidden">
                                     <x-form id="delete"  action="{{ route('caisse.delete' , $caisse->id) }}" method="POST"/>
                                 </div>
-                                <x-caisse-update :id="$caisse->id" :libelle="$caisse->libelle" :date="$caisse->date" :montant="$caisse->montant" :AcheterPar="$caisse->AcheterPar" :pieceJointe="$caisse->pieceJointe">
+                                <x-caisse-update :id="$caisse->id" :libelle="$caisse->libelle" :date="$caisse->date" :debit="$caisse->debit" :credit="$caisse->credit" :AcheterPar="$caisse->AcheterPar" :nature="$caisse->nature" :pieceJointe="$caisse->pieceJointe">
                                     <x-slot:buttonName>
-                                        <button id="openModalBtn3" class="text-black hover:bg-white h-12 w-12 font-bold flex items-center justify-center    rounded-md px-3 py-1.5 text-sm  leading-6  shadow-sm  hover:bg-blue-400/90 focus:outline-none" >
+                                        <button id="{{$openModalButton}}" class="text-black hover:bg-white h-12 w-12 font-bold flex items-center justify-center    rounded-md px-3 py-1.5 text-sm  leading-6  shadow-sm  hover:bg-blue-400/90 focus:outline-none" >
                                             <i class='bx bx-message-square-add'></i>
                                         </button >
                                     </x-slot:buttonName>

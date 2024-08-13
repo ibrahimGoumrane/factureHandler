@@ -1,7 +1,7 @@
+@import 'flowbite';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'flowbite';
 
 .scrollable-container {
     padding-right: 10px; /* Space for the vertical scrollbar */

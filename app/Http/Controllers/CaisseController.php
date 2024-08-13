@@ -9,7 +9,9 @@ use App\Http\Requests\UpdatecaisseRequest;
 use Error;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Services\DataTable;
 use function auth;
@@ -69,11 +71,24 @@ class CaisseController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'montant' => ['required', 'numeric'],
+            'credit' => 'numeric',
+            'debit' => 'numeric',
             'libelle' => 'required',
+            'nature' => 'string',
             'AcheterPar' => 'required',
+            'date' => 'required|date|before_or_equal:today',
             'pieceJointe' => 'required|mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
         ]);
+        $exists = DB::table('caisses')->where('libelle', $validatedData['libelle'])->exists();
+
+        if ($exists) {
+            throw ValidationException::withMessages([
+                'libelle' => 'The libelle value has already been taken.',
+            ]);
+        }
+
+
+        //check if the tme given is correct commpared to today
         $caisse = new Caisse();
         if($request->hasFile('pieceJointe')) {
             $file = $request->file('pieceJointe');
@@ -82,9 +97,11 @@ class CaisseController extends Controller
             $caisse->pieceJointe = '/storage/' . $filePath;
         }
             $caisse->libelle = $validatedData['libelle'];
-            $caisse->montant = $validatedData['montant'];
+            $caisse->nature = $validatedData['nature'];
+            $caisse->credit = $validatedData['credit'];
+            $caisse->debit = $validatedData['debit'];
             $caisse->AcheterPar = $validatedData['AcheterPar'];
-            $caisse->date = now();
+            $caisse->date = $validatedData['date'];
             if(auth()->id()){
                 $caisse->user_id = auth()->id() ;
             }else{
@@ -118,14 +135,26 @@ class CaisseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
             // Validate the request data
             $validatedData = $request->validate([
-                'montant' => ['required', 'numeric'],
+                'credit' => 'numeric',
+                'debit' => 'numeric',
                 'libelle' => 'required',
+                'nature' => 'string',
                 'AcheterPar' => 'required',
+                'date' => 'required|date|before_or_equal:today',
                 'pieceJointe' => 'mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
             ]);
+
+            $exists = DB::table('caisses')->where('libelle', $validatedData['libelle'])->exists();
+
+            if ($exists) {
+                throw ValidationException::withMessages([
+                    'libelle' => 'The libelle value has already been taken.',
+                ]);
+            }
+
+
             $caisse = Caisse::findOrFail($id);
             // Initialize $pieceJointe as the current file path
             $pieceJointe = $caisse->pieceJointe;
@@ -149,18 +178,18 @@ class CaisseController extends Controller
             // Update the caisse record
             $caisse->update([
                 'libelle' => $validatedData['libelle'],
-                'montant' => $validatedData['montant'],
+                'nature' => $validatedData['nature'],
+                'credit' => $validatedData['credit'],
+                'debit' => $validatedData['debit'],
                 'AcheterPar' => $validatedData['AcheterPar'],
                 'pieceJointe' => $pieceJointe,
-                'date' => now(),
+                'date' => $validatedData['date'],
                 'user_id' => auth()->id()
             ]);
 
             return redirect()->route('caisse.index')
                 ->with('success', 'mise a jour avec success.');
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'mise a jour avec erreur: ' . $e->getMessage()], 500);
-        }
+
     }
 
 
