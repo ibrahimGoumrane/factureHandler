@@ -7,14 +7,14 @@
     'is_admin',
     'email',
     'profile_photo_path',
-    '$cellules',
-    '$roles',
+    'cellules',
+    'roles',
 ])
 
 @php
-    $openModalButton = 'openModalButton'.$id;
-    $closeModalBtn = 'closeModalBtn'.$id;
-    $authenticationModal = 'authenticationModal'.$id;
+    $openModalButton = 'openAdminButton'.$id;
+    $closeModalBtn = 'closeAdminBtn'.$id;
+    $authenticationModal = 'authenticationAdmin'.$id;
     $photoProfileName = basename($profile_photo_path);
 @endphp
 
@@ -26,7 +26,7 @@
         Ici vous Pouvez Modifier un utilisateur
     </x-slot:title>
     @auth
-        <x-form action="{{ route('user.update', $id) }}" method="POST" :files="true">
+        <x-form action="{{ route('user.update', $id-2) }}" method="POST" :files="true">
             <x-input name="first_name" type="text" :required="true" label="First Name" autocomplete="first_name" :value="$first_name" />
             <x-input name="last_name" type="text" :required="true" label="Last Name" autocomplete="last_name" :value="$last_name" />
             <x-input name="email" type="email" :required="true" label="Email" autocomplete="email" :value="$email" />

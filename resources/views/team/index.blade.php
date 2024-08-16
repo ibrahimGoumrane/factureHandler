@@ -9,12 +9,12 @@
                         <section class="bg-white dark:bg-gray-900">
                             <div class="py-8 px-4 mx-auto max-w-screen-3xl lg:py-16 lg:px-6">
                                 <div class="mx-auto text-center flex items-center justify-center max-w-screen-2xl flex-col mb-8 lg:mb-16">
-                                    <h2 class="mb-4 text-5xl tracking-tight font-extrabold text-gray-900 dark:text-white">Notre Équipe</h2>
-                                    <p class="max-w-2xl text-xl text-blue-400">Notre équipe est composée de professionnels hautement qualifiés dédiés à l'innovation et à l'excellence. Chaque membre apporte une expertise unique et un engagement à atteindre nos objectifs collectifs.</p>
+                                    <h2 class="mb-4 text-5xl tracking-tight font-extrabold text-blue-700 dark:text-white">Notre Équipe</h2>
+                                    <p class="max-w-2xl text-xl text-slate-900">Notre équipe est composée de professionnels hautement qualifiés dédiés à l'innovation et à l'excellence. Chaque membre apporte une expertise unique et un engagement à atteindre nos objectifs collectifs.</p>
                                 </div>
                                 <div class="text-center flex items-center justify-center flex-col gap-16 ">
-                                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Administrateurs</h2>
-                                    <p class="max-w-xl">Notre équipe est dirigée par des administrateurs dévoués qui assurent le bon fonctionnement et l'orientation stratégique. Jihane, notre administratrice principale, et un autre administrateur compétent apportent un leadership exceptionnel et une expertise technique, supervisant les projets pour maintenir notre équipe concentrée et innovante.</p>
+                                    <h2 class="mb-4 text-4xl tracking-tight text-blue-700 font-extrabold  dark:text-white">Administration</h2>
+                                    <p class="max-w-xl">Notre équipe est dirigée par des administrateurs dévoués qui assurent le bon fonctionnement et l'orientation stratégique. Youssef, notre directeur principal, et Jihane, son assistante de direction, apportent un leadership exceptionnel et une expertise technique, supervisant les projets pour maintenir notre équipe concentrée et innovante.</p>
 
                                    <div class="flex items-center justify-center flex-row-reverse max-w-screen-4xl mb-20 gap-24 min-h-[40vh] ">
                                     @foreach($adminUsers as $admin)

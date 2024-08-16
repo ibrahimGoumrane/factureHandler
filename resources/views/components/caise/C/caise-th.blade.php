@@ -14,4 +14,4 @@
 
 
 <th {{$attributes->merge([
-    'class' => $chosenOne])}}>{{$slot}}</th>
+    'class' => $chosenOne , 'style'=> 'width: 200px; ' ])}}>{{$slot}}</th>

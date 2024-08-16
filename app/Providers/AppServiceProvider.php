@@ -35,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('team.admin', 'team-admin');
         Blade::component('team.index', 'team-index');
         Blade::component('admin.dashboard', 'adminDashboard');
+        Blade::component('admin.dashboardCellule', 'adminDashboardCellule');
+        Blade::component('admin.dashboardRole', 'adminDashboardRole');
+
+        Blade::component('admin.updateUser', 'adminUpdateUser');
+        Blade::component('admin.updateCellule', 'adminUpdateCellule');
+        Blade::component('admin.updateRole', 'adminUpdateRole');
         Model::unguard();
     }
 }

@@ -18,6 +18,7 @@ use function ltrim;
 use function min;
 use function redirect;
 use function response;
+use function time;
 use function view;
 
 class RegistredUserController extends Controller
@@ -67,13 +68,12 @@ class RegistredUserController extends Controller
      */
     public function update_profile(Request $request , string $id)
     {
-
         try {
             // Retrieve the Caisse record
             $user = User::findOrfail($id);
             // Validate the request
             $attrs = $request->validate([
-                'profile_photo_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'profile_photo_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             ]);
             // upload a new photo picture
             $profile_photo_path = $attrs['profile_photo_path'];
@@ -169,14 +169,56 @@ class RegistredUserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $attrs = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $id],
+            'password' => ['required', Password::min(8)->letters()->numbers()->mixedCase(), 'confirmed'],
+            'cellule_id' => 'required',
+            'role_id' => 'required',
+            'profile_photo_path' => [
+                'image',
+                'mimes:jpeg,png,jpg,gif,svg',
+                'max:4096'
+            ]
+        ]);
 
+        try {
+            // Retrieve the User record
+            $user = User::findOrFail($id);
+
+            // Update user attributes
+            $user->first_name = $attrs['first_name'];
+            $user->last_name = $attrs['last_name'];
+            $user->email = $attrs['email'];
+            $user->password = bcrypt($attrs['password']);
+            $user->cellule_id = $attrs['cellule_id'];
+            $user->role_id = $attrs['role_id'];
+
+            // Handle profile photo upload
+            if ($request->hasFile('profile_photo_path')) {
+                $profile_photo_path = $request->file('profile_photo_path');
+                $profile_photo_path_name = time() . '.' . $profile_photo_path->getClientOriginalName();
+                $filePath = $profile_photo_path->storeAs('uploads/profilePicture', $profile_photo_path_name, 'public');
+                $user->profile_photo_path = '/storage/' . $filePath;
+            }
+
+            // Save the updated user
+            $user->save();
+
+            return redirect()->back()->with('success', 'File uploaded successfully');
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving file: ' . $e->getMessage()], 500);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $user = \App\Models\Cellule::findOrFail($id);
+        $user->delete();
+        return redirect()->route('admin.index')
+            ->with('success', 'Suppression avec succès de user.');
     }
 }

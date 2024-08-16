@@ -14,6 +14,7 @@
     word-wrap: break-word; /* Ensure content wraps within the cell */
     border: 1px solid #ccc; /* Optional: for visual clarity */
     padding: 8px; /* Optional: for spacing */
+    padding-inline: 12px;
     min-height: 100px;
 }
 .table-fixed tr {

@@ -57,13 +57,36 @@ class Role extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'libelle' => 'required|string|max:255',
+        ]);
 
+        $exists = DB::table('roles')->where('libelle', $validatedData['libelle'])->exists();
+        if ($exists) {
+            throw ValidationException::withMessages([
+                'libelle' => 'We can\'t have two roles with the same name',
+            ]);
+        }
+
+        $role = \App\Models\Role::findOrFail($id);
+
+        $role->update([
+            'libelle' => $validatedData['libelle'],
+        ]);
+
+        return redirect()->route('admin.index')
+            ->with('success', 'Mise à jour avec succès de cellule.');
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
+        $cellule = \App\Models\Cellule::findOrFail($id);
+
+        $cellule->delete();
+
+        return redirect()->route('admin.index')
+            ->with('success', 'Suppression avec succès de role.');
     }
 }

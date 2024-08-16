@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         }
 
 
-        $roles = ['Chef de project', 'Developper', 'Directeur', 'Assistante de direction' ,'Stagiaire'];
+        $roles = ['Chef de project', 'Developpeur', 'Directeur', 'Assistante de direction' ,'Stagiaire'];
 
         foreach ($roles as $libelle) {
             Role::create(['libelle' => $libelle]);
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
         $adminRole = Role::where('libelle', 'admin')->first();
         $chefProject = Role::where('libelle', 'Chef de project')->first();
         $assistante = Role::where('libelle', 'Assistante de direction')->first();
-        $developper = Role::where('libelle', 'Developper')->first();
+        $developper = Role::where('libelle', 'Developpeur')->first();
         $directeur = Role::where('libelle', 'Directeur')->first();
         $stagiaire = Role::where('libelle', 'Stagiaire')->first();
         $none = Cellule::where('libelle', 'none')->first();
