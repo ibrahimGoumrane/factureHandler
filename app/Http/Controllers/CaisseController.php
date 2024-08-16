@@ -71,13 +71,13 @@ class CaisseController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'credit' => 'numeric',
-            'debit' => 'numeric',
+            'credit' => 'nullable|numeric',
+            'debit' => 'nullable|numeric',
             'libelle' => 'required',
             'nature' => 'string',
             'AcheterPar' => 'required',
             'date' => 'required|date|before_or_equal:today',
-            'pieceJointe' => 'required|mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
+            'pieceJointe' => 'mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
         ]);
         $exists = DB::table('caisses')->where('libelle', $validatedData['libelle'])->exists();
 
@@ -90,6 +90,7 @@ class CaisseController extends Controller
 
         //check if the tme given is correct commpared to today
         $caisse = new Caisse();
+        $fileName = '';
         if($request->hasFile('pieceJointe')) {
             $file = $request->file('pieceJointe');
             $fileName = time().'_'.$file->getClientOriginalName();
@@ -98,8 +99,8 @@ class CaisseController extends Controller
         }
             $caisse->libelle = $validatedData['libelle'];
             $caisse->nature = $validatedData['nature'];
-            $caisse->credit = $validatedData['credit'];
-            $caisse->debit = $validatedData['debit'];
+            $caisse->credit = $validatedData['credit']??0;
+            $caisse->debit = $validatedData['debit']??0;
             $caisse->AcheterPar = $validatedData['AcheterPar'];
             $caisse->date = $validatedData['date'];
             if(auth()->id()){
@@ -108,8 +109,15 @@ class CaisseController extends Controller
                 return new Error('User not connected');
             }
             $caisse->save();
+            $returnedMessage = 'Enregistrement avec success.';
+            if($fileName){
+                $returnedMessage .= 'avec fichier';
+            }else{
+                $returnedMessage .= 'sans fichier';
+            }
+
             return redirect()->route('caisse.index')
-                ->with('success', 'File has been uploaded.')
+                ->with('success', $returnedMessage)
                 ->with('file', $fileName);
     }
 
@@ -136,15 +144,15 @@ class CaisseController extends Controller
     public function update(Request $request, $id)
     {
             // Validate the request data
-            $validatedData = $request->validate([
-                'credit' => 'numeric',
-                'debit' => 'numeric',
-                'libelle' => 'required',
-                'nature' => 'string',
-                'AcheterPar' => 'required',
-                'date' => 'required|date|before_or_equal:today',
-                'pieceJointe' => 'mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
-            ]);
+        $validatedData = $request->validate([
+            'credit' => 'nullable|numeric',
+            'debit' => 'nullable|numeric',
+            'libelle' => 'required',
+            'nature' => 'string',
+            'AcheterPar' => 'required',
+            'date' => 'required|date|before_or_equal:today',
+            'pieceJointe' => 'mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
+        ]);
 
             $exists = DB::table('caisses')->where('libelle', $validatedData['libelle'])->exists();
 
@@ -179,8 +187,8 @@ class CaisseController extends Controller
             $caisse->update([
                 'libelle' => $validatedData['libelle'],
                 'nature' => $validatedData['nature'],
-                'credit' => $validatedData['credit'],
-                'debit' => $validatedData['debit'],
+                'credit' => $validatedData['credit'] ?? 0,
+                'debit' => $validatedData['debit'] ?? 0,
                 'AcheterPar' => $validatedData['AcheterPar'],
                 'pieceJointe' => $pieceJointe,
                 'date' => $validatedData['date'],

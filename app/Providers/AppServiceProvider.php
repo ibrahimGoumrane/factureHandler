@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::component('mainNavigation.index', 'mainNav');
         Blade::component('homeNotLoggedIn.AboutUs', 'AboutUs');
+        Blade::component('homeNotLoggedIn.index', 'index');
         Blade::component('homeNotLoggedIn.hero', 'heroNotLoggedIn');
         Blade::component('homeNotLoggedIn.contactUs', 'contactUs');
         Blade::component('homeNotLoggedIn.footer', 'footerNotLoggedIn');
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('caisse.monthFilter', 'caisse-filter');
         Blade::component('caisse.update', 'caisse-update');
         Blade::component('caisse.totalMonth', 'caisse-total');
+        Blade::component('team.member', 'team-member');
+        Blade::component('team.admin', 'team-admin');
+        Blade::component('team.index', 'team-index');
+        Blade::component('admin.dashboard', 'adminDashboard');
         Model::unguard();
     }
 }

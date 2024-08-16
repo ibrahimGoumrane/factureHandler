@@ -11,8 +11,8 @@
             <x-input name="libelle" type="text" :required="true" label="Libelle" autocomplete="libelle"  />
             <x-input name="nature" type="text" :required="true" label="Nature" autocomplete="nature"  />
         <div class="flex items-center justify-center gap-2">
-            <x-input name="credit" type="number" :required="true" label="Credit" autocomplete="credit"  />
-            <x-input name="debit" type="number" :required="true" label="Debit" autocomplete="debit"   />
+            <x-input name="credit" type="number"  label="Credit" autocomplete="credit"  />
+            <x-input name="debit" type="number"  label="Debit" autocomplete="debit"   />
         </div>
             <x-input name="date" type="date" :required="true" label="Date" autocomplete="date"  />
             <x-input name="AcheterPar" type="text" :required="true" label="Acheter Par" autocomplete="AcheterPar"  />

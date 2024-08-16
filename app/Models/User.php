@@ -47,4 +47,20 @@ class User extends Authenticatable
     public function caisse(){
         return $this->hasMany('App\Models\Caisse');
     }
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
+    }
+    public function cellule()
+    {
+        return $this->belongsTo('App\Models\Cellule');
+    }
+    public function getAllRelatedData()
+    {
+        return [
+            'user' => $this,
+            'role' => $this->role,
+            'cellule' => $this->cellule,
+        ];
+    }
 }

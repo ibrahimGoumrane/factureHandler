@@ -11,13 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('cellules', function (Blueprint $table) {
+            $table->id();
+            $table->string('libelle')->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('libelle')->unique();
+            $table->timestamps();
+        });
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
+            $table->foreignId('cellule_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+            $table->boolean('is_admin')->default(false)->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('profile_photo_path', 2048)->default('/storage/uploads/profilePicture/default.png');
             $table->rememberToken();
             $table->timestamps();
         });

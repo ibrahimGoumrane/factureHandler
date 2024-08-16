@@ -1,11 +1,10 @@
 <x-layout>
     <x-mainNav />
-    <main class=" pt-20">
-        <div class="mx-auto mt-2 max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-{{--            <x-heroNotLoggedIn />--}}
-{{--            <x-AboutUs />--}}
-{{--            <x-contactUs />--}}
-{{--            <x-footerNotLoggedIn />--}}
+    <main class="min-w-[100vw] min-h-[100vh] flex items-center justify-center">
+        <div class="absolute inset-0 ">
+            <img class="w-screen h-screen opacity-60" src="https://admin.netlawman.com/uploads/article/original/types-uk-company.jpg" alt="hero">
         </div>
+        <x-heroNotLoggedIn />
+{{--        <x-team-index :adminUsers="$adminUsers" :nebulaUsers="$nebulaUsers" :novaUsers="$novaUsers" :neutronUsers="$neutronUsers" />--}}
     </main>
 </x-layout>

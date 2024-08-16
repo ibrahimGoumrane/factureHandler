@@ -28,6 +28,9 @@ export default {
         dropShadow: {
             'custom-blue': '0 20px 20px rgba(147, 197, 253, 0.5)', // Blue-300 with 50% opacity
         },
+        colors:{
+            'gray-75': 'rgba(249, 250, 251, 1)', // Custom gray color with 75% opacity
+        }
     },
   },
   plugins: [

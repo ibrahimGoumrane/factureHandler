@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 //Route to the home page
 Route::view('/', 'homeNotLoggedIn/index')->name('home');
+Route::view('/team', 'team/index')->name('team');
+Route::get('/team', [\App\Http\Controllers\RegistredUserController::class, 'teamData'])->name('team');
 
 Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
@@ -18,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/caisse', [\App\Http\Controllers\CaisseController::class, 'store'])->name('caisse.store');
     Route::post('/caisse/update/{id}', [\App\Http\Controllers\CaisseController::class, 'update'])->name('caisse.update');
     Route::post('/caisse/delete/{id}', [\App\Http\Controllers\CaisseController::class, 'destroy'])->name('caisse.delete');
+    Route::post('/profile_picture', [\App\Http\Controllers\RegistredUserController::class, 'update_profile'])->name('profile_picture.store');
     Route::post('/logout', [AuthUser::class, 'destroy'])->name('logout');
 });
 //Controller used to log in and log out
