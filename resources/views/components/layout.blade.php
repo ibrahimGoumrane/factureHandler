@@ -99,7 +99,7 @@
                 "lengthMenu": [5, 10, 25, 50, 75, 100],
                 "columnDefs": [
                     { "orderable": false, "targets": [ 0 , 2 , 5 , 6 ] }, // Disable sorting for these columns
-                    { "searchable": false, "targets": [6 , 7] }, // Optional: Disable searching for these columns
+                    { "searchable": true, "targets": [0,1,2,3,4,5] }, // Optional: Disable searching for these columns
                     { "type": "date-dmy", "targets": 1 }
                 ],
                 "createdRow": function(row, data, dataIndex) {

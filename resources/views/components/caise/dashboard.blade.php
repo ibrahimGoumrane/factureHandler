@@ -18,7 +18,9 @@
                 <x-caise.C.caise-th style="width: 40px;">Credit</x-caise.C.caise-th>
                 <x-caise.C.caise-th style="width: 50px;">Acheter Par</x-caise.C.caise-th>
                 <x-caise.C.caise-th position="right" style="width: 50px; ">Piece Joint</x-caise.C.caise-th>
+                @can('canManipulateCaisse' ,\App\Models\User::class)
                 <x-caise.C.caise-th position="right" style="width: 50px; ">Actions</x-caise.C.caise-th>
+                @endcan
             </x-caise.C.caise-thead>
             <x-caise.C.caise-tbody>
                 @if(isset($caisses) && $caisses->count() !== 0)
@@ -54,6 +56,7 @@
                                     </div>
                                 @endif
                             </x-caise.C.caise-td>
+                            @can('canManipulateCaisse' ,\App\Models\User::class)
                             <x-caise.C.caise-td class=" flex items-center justify-center gap-10">
                                 <div class="hidden">
                                     <x-form id="delete"  action="{{ route('caisse.delete' , $caisse->id) }}" method="POST"/>
@@ -69,6 +72,7 @@
                                     <i class='bx bxs-trash'></i>
                                 </button>
                             </x-caise.C.caise-td>
+                            @endcan
                         </tr>
                     @endforeach
                 @endif

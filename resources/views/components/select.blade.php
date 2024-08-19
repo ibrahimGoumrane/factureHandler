@@ -1,4 +1,4 @@
-@props(['name', 'options', 'required', 'label'])
+@props(['name', 'options', 'required', 'label' ,'value'=>'1'])
 
 
 @php
@@ -14,7 +14,7 @@
     <x-form-error name='{{$name}}'/>
     <select name="{{$name}}" class="{{$classes}}" >
         @foreach($options as $option)
-            <option value="{{ $option->id }}">{{ $option->libelle }}</option>
+            <option value="{{ $option->id }}" {{ $option->id == $value ? 'selected' : '' }} >{{ $option->libelle }}</option>
         @endforeach
     </select>
 @endif

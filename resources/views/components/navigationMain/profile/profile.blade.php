@@ -8,7 +8,7 @@
     >
         <span class="absolute -inset-1.5"></span>
         <span class="sr-only">Open user menu</span>
-        <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+        <img class="h-12 w-12 rounded-full" src="{{asset(auth()->user()->profile_photo_path)}}" alt="">
     </button>
 
     <div
@@ -20,8 +20,6 @@
         tabindex="-1"
     >
         <x-form method="POST"  id="delete-form" action="logout" class=" hidden"></x-form>
-        <x-navigationMain.menu-item :active="request()->is('/profile')">Profile</x-navigationMain.menu-item>
-        <x-navigationMain.menu-item :active="request()->is('/settings')">Parametre</x-navigationMain.menu-item>
         <span class="block px-4 py-2 text-sm text-gray-700 active:bg-blue-300"><button type="submit" form="delete-form">Log Out</button></span>
 
 

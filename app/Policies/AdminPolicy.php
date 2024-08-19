@@ -18,4 +18,8 @@ class AdminPolicy
     {
         return $user->is_admin ? Response::allow() : Response::deny('tu n\'est pas admin');
     }
+    public function canManipulateCaisse(User $user): Response
+    {
+        return $user->is_admin ? Response::allow() : Response::deny('tu n\'est pas admin');
+    }
 }

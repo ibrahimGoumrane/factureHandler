@@ -30,7 +30,9 @@
                 <div class="flex items-center justify-between gap-x-2 mb-4">
                     <x-caisse-filter />
                     <x-caisse-total />
+                    @can('canManipulateCaisse' ,\App\Models\User::class)
                     <x-caisse-create />
+                    @endcan
 
                 </div>
             <x-caise.dashboard :caisses="$caisses" />

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 
 //Route to the home page
 Route::view('/', 'homeNotLoggedIn/index')->name('home');
-Route::view('/team', 'team/index')->name('team');
 Route::get('/team', [\App\Http\Controllers\RegistredUserController::class, 'teamData'])->name('team');
 
 

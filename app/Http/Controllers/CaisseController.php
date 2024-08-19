@@ -6,10 +6,12 @@ use App\DataTables\CaisseDataTable;
 use App\Models\caisse;
 use App\Http\Requests\StorecaisseRequest;
 use App\Http\Requests\UpdatecaisseRequest;
+use App\Models\User;
 use Error;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\DataTables;
@@ -35,6 +37,8 @@ class CaisseController extends Controller
 
     public function index($year = null, $month = null)
     {
+        Gate::authorize('canManipulateCaisse', User::class);
+
         Carbon::setLocale('fr_MA');
 
         // Set default year and month if not provided

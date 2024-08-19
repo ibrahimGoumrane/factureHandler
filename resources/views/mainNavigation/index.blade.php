@@ -30,7 +30,9 @@
                     <div class="flex space-x-4 items-center justify-center">
                         <x-navigationMain.link :active="request()->routeIs('home')" :href="route('home')">Dashboard</x-navigationMain.link>
                         <x-navigationMain.link :active="request()->routeIs('team')" :href="route('team')">Equipe</x-navigationMain.link>
-                        <x-navigationMain.link :active="request()->routeIs('caisse.index')" :href="route('caisse.index')">Caisse</x-navigationMain.link>
+                        @can('canManipulateCaisse' ,\App\Models\User::class)
+                         <x-navigationMain.link :active="request()->routeIs('caisse.index')" :href="route('caisse.index')">Caisse</x-navigationMain.link>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -52,6 +54,9 @@
         <div class="space-y-1 px-2 pb-3 pt-2 max-w-[90vw] mx-auto">
             <x-navigationMain.link :phone="true" :active="request()->is('/home')" :href="route('home')">Dashboard</x-navigationMain.link>
             <x-navigationMain.link :phone="true" :active="request()->is('/team')" :href="route('team')">Equipe</x-navigationMain.link>
+            @can('canManipulateCaisse' ,\App\Models\User::class)
+                <x-navigationMain.link :active="request()->routeIs('caisse.index')" :href="route('caisse.index')">Caisse</x-navigationMain.link>
+            @endcan
         </div>
     </div>
 </nav>
