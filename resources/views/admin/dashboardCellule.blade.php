@@ -1,7 +1,10 @@
 @props(['cellules'])
 
 <div class="rounded-t-lg max-w-[90vw] overflow-hidden flex-1 self-start ">
-    <div class="flex items-start justify-start scrollable-container max-w-full max-h-[60vh]">
+        <div class="flex items-center justify-end gap-x-2 mb-4 w-full">
+            <x-adminCreateCellule />
+        </div>
+    <div class="flex items-start flex-col justify-start scrollable-container max-w-full max-h-[60vh]">
         <table class="display table-fixed dataTables_wrapper ">
             <x-caise.C.caise-thead>
                 <x-caise.C.caise-th >id</x-caise.C.caise-th>
@@ -12,7 +15,7 @@
                 @if(isset($cellules) && $cellules->count() !== 0)
                     @foreach ($cellules as $cellule)
                         @php
-                            $openModalButton = 'openAdminCelluleButton'.$cellule->id+2;
+                            $openModalButton = 'openAdminCelluleButton'.$cellule->id;
                         @endphp
                         <tr>
                             <x-caise.C.caise-td class="dt-body-left" >{{ $cellule->id }}</x-caise.C.caise-td>
@@ -21,13 +24,13 @@
                                 <div class="hidden">
                                     <x-form id="delete" action="{{ route('cellule.delete', $cellule->id) }}" method="POST"/>
                                 </div>
-                                <x-adminUpdateRole :id="$cellule->id" :libelle="$cellule->libelle">
+                                <x-adminUpdateCellule :id="$cellule->id" :libelle="$cellule->libelle">
                                     <x-slot:buttonName>
                                         <button id="{{$openModalButton}}" class="text-black hover:bg-white h-12 w-12 font-bold flex items-center justify-center rounded-md px-3 py-1.5 text-sm leading-6 shadow-sm hover:bg-blue-400/90 focus:outline-none">
                                             <i class='bx bx-message-square-add'></i>
                                         </button>
                                     </x-slot:buttonName>
-                                </x-adminUpdateRole>
+                                </x-adminUpdateCellule>
                                 <button type="submit" form="delete" class="text-black hover:bg-white h-12 w-12 font-bold flex items-center justify-center rounded-md px-3 py-1.5 text-sm leading-6 shadow-sm hover:bg-blue-400/90 focus:outline-none">
                                     <i class='bx bxs-trash'></i>
                                 </button>

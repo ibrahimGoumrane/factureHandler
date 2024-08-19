@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('caisses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->noActionOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('libelle')->unique();
             $table->string('nature');
             $table->integer('debit')->nullable();

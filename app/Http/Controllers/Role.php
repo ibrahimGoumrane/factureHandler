@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Caisse;
+use App\Models\User;
 use Carbon\Carbon;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use function auth;
 use function file_exists;
@@ -40,7 +42,11 @@ class Role extends Controller
      */
     public function store(Request $request)
     {
-
+        $attrs = $request->validate([
+            'libelle' => 'required|string|max:255',
+        ]);
+        \App\Models\Role::create($attrs);
+        return redirect()->back()->with('success', 'Role est ajouter avec success');
     }
 
 
@@ -57,6 +63,8 @@ class Role extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('view', User::class);
+
         $validatedData = $request->validate([
             'libelle' => 'required|string|max:255',
         ]);
@@ -64,7 +72,7 @@ class Role extends Controller
         $exists = DB::table('roles')->where('libelle', $validatedData['libelle'])->exists();
         if ($exists) {
             throw ValidationException::withMessages([
-                'libelle' => 'We can\'t have two roles with the same name',
+                'libelle' => 'le libelle doit etre unique',
             ]);
         }
 
@@ -74,19 +82,20 @@ class Role extends Controller
             'libelle' => $validatedData['libelle'],
         ]);
 
-        return redirect()->route('admin.index')
-            ->with('success', 'Mise à jour avec succès de cellule.');
+        return redirect()->back()->with('success', 'role est modifier avec success');
+
     }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $cellule = \App\Models\Cellule::findOrFail($id);
+        Gate::authorize('view', User::class);
+        $role = \App\Models\Role::findOrFail($id);
 
-        $cellule->delete();
+        $role->delete();
 
-        return redirect()->route('admin.index')
-            ->with('success', 'Suppression avec succès de role.');
+        return redirect()->back()->with('success', 'role est supprimer avec success');
+
     }
 }

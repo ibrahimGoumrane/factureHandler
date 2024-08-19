@@ -6,9 +6,11 @@ use App\Models\Caisse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use function bcrypt;
 use function dd;
 use function dump;
 use function error_log;
@@ -63,37 +65,6 @@ class RegistredUserController extends Controller
         ]);
     }
 
-    /**
-     * Store the new profile Picture
-     */
-    public function update_profile(Request $request , string $id)
-    {
-        try {
-            // Retrieve the Caisse record
-            $user = User::findOrfail($id);
-            // Validate the request
-            $attrs = $request->validate([
-                'profile_photo_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
-            ]);
-            // upload a new photo picture
-            $profile_photo_path = $attrs['profile_photo_path'];
-            $returnedMessage='File uploaded successfully';
-
-            if($request->hasFile('profile_photo_path')){
-                $profile_photo_path = $request->file('profile_photo_path');
-                $profile_photo_path_name = time() . '.' . $profile_photo_path->getClientOriginalName();
-                $filePath = $profile_photo_path->storeAs('uploads/profilePicture', $profile_photo_path_name, 'public');
-                $user->profile_photo_path = '/storage/' . $filePath;
-            }else{
-                $user->profile_photo_path = '/storage/uploads/profilePicture/default.png';
-                $user->save();
-                throw new \Exception('No file selected');
-            }
-            return redirect()->back()->with('success', $returnedMessage);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Error retrieving file: ' . $e->getMessage()], 500);
-        }
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -115,19 +86,28 @@ class RegistredUserController extends Controller
                     'last_name' => 'required|string|max:255',
                     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
                     'password' => ['required', Password::min(8)->letters()->numbers()->mixedCase(), 'confirmed'],
+                    'role_id' => 'sometimes|integer|exists:roles,id',
+                    'cellule_id' => 'sometimes|integer|exists:cellules,id',
+                    'profile_photo_path' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
                 ]);
 
 
+                $profilePhotoPath = '/storage/uploads/profilePicture/default.png'; // Default picture
+                if ($request->hasFile('profile_photo_path')) {
+                    $profilePhoto = $request->file('profile_photo_path');
+                    $profilePhotoName = time() . '.' . $profilePhoto->getClientOriginalName();
+                    $filePath = $profilePhoto->storeAs('uploads/profilePicture', $profilePhotoName, 'public');
+                    $profilePhotoPath = '/storage/' . $filePath;
+                }
                 // Create a new user with the validated data
                 $user = User::create([
                     'first_name' => $attrs['first_name'],
                     'last_name' => $attrs['last_name'],
                     'email' => $attrs['email'],
                     'password' => bcrypt($attrs['password']),
-                    'cellule_id' => 1,
-                    'role_id' => 3,
-                    'profile_photo_path' => '/storage/uploads/profilePicture/default.png', // Assign default picture
-
+                    'cellule_id' => $attrs['cellule_id'] ?? 1, // Use provided cellule_id or default to 1
+                    'role_id' => $attrs['role_id'] ?? 3, // Use provided role_id or default to 3
+                    'profile_photo_path' => $profilePhotoPath, // Use uploaded or default picture
                 ]);
                 Log::info($user);
 
@@ -148,6 +128,55 @@ class RegistredUserController extends Controller
                 return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.')->withInput();
             }
         }
+        /**
+        *create as admin
+         */
+    public function storeAdmin(Request $request)
+    {
+        try {
+            // Validate the request
+            $attrs = $request->validate([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+                'role_id' => 'sometimes|integer|exists:roles,id',
+                'cellule_id' => 'sometimes|integer|exists:cellules,id',
+                'profile_photo_path' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            ]);
+
+
+            $profilePhotoPath = '/storage/uploads/profilePicture/default.png'; // Default picture
+            if ($request->hasFile('profile_photo_path')) {
+                $profilePhoto = $request->file('profile_photo_path');
+                $profilePhotoName = time() . '.' . $profilePhoto->getClientOriginalName();
+                $filePath = $profilePhoto->storeAs('uploads/profilePicture', $profilePhotoName, 'public');
+                $profilePhotoPath = '/storage/' . $filePath;
+            }
+            // Create a new user with the validated data
+            $user = User::create([
+                'first_name' => $attrs['first_name'],
+                'last_name' => $attrs['last_name'],
+                'email' => $attrs['email'],
+                'password' => bcrypt($attrs['password']),
+                'cellule_id' => $attrs['cellule_id'] ?? 1, // Use provided cellule_id or default to 1
+                'role_id' => $attrs['role_id'] ?? 3, // Use provided role_id or default to 3
+                'profile_photo_path' => $profilePhotoPath, // Use uploaded or default picture
+            ]);
+         return redirect()->back()->with('success', ' utulisateur est ajouter avec success');
+        } catch (ValidationException $e) {
+            Log::info($e->getMessage());
+
+            // Handle validation errors
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            // Handle other exception
+            Log::info($e->getMessage());
+
+            return redirect()->back()->with('error', 'An unexpected error occurred. Please try again.')->withInput();
+        }
+    }
+
+
     /**
      * Display the specified resource.
      */
@@ -169,14 +198,16 @@ class RegistredUserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Gate::authorize('view', User::class);
+
         $attrs = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $id],
-            'password' => ['required', Password::min(8)->letters()->numbers()->mixedCase(), 'confirmed'],
-            'cellule_id' => 'required',
-            'role_id' => 'required',
+            'first_name' => 'sometimes|string|max:255',
+            'last_name' => 'sometimes|string|max:255',
+            'email' => ['sometimes', 'email', 'max:255', 'unique:users,email,' . $id],
+            'cellule_id' => 'sometimes',
+            'role_id' => 'sometimes',
             'profile_photo_path' => [
+                'sometimes',
                 'image',
                 'mimes:jpeg,png,jpg,gif,svg',
                 'max:4096'
@@ -191,7 +222,6 @@ class RegistredUserController extends Controller
             $user->first_name = $attrs['first_name'];
             $user->last_name = $attrs['last_name'];
             $user->email = $attrs['email'];
-            $user->password = bcrypt($attrs['password']);
             $user->cellule_id = $attrs['cellule_id'];
             $user->role_id = $attrs['role_id'];
 
@@ -206,7 +236,7 @@ class RegistredUserController extends Controller
             // Save the updated user
             $user->save();
 
-            return redirect()->back()->with('success', 'File uploaded successfully');
+            return redirect()->back()->with('success', ' utulisateur est modifier avec success');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error retrieving file: ' . $e->getMessage()], 500);
         }
@@ -216,9 +246,10 @@ class RegistredUserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = \App\Models\Cellule::findOrFail($id);
+        Gate::authorize('view', User::class);
+
+        $user = \App\Models\User::findOrFail($id);
         $user->delete();
-        return redirect()->route('admin.index')
-            ->with('success', 'Suppression avec succès de user.');
+        return redirect()->back()->with('success', 'utulisateur est supprimer avec success');
     }
 }

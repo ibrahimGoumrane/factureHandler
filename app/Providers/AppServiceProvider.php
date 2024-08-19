@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Policies\AdminPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,10 +40,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('admin.dashboard', 'adminDashboard');
         Blade::component('admin.dashboardCellule', 'adminDashboardCellule');
         Blade::component('admin.dashboardRole', 'adminDashboardRole');
-
+        Blade::component('admin.createCellule', 'adminCreateCellule');
+        Blade::component('admin.createUser', 'adminCreateUser');
+        Blade::component('admin.createRole', 'adminCreateRole');
         Blade::component('admin.updateUser', 'adminUpdateUser');
         Blade::component('admin.updateCellule', 'adminUpdateCellule');
         Blade::component('admin.updateRole', 'adminUpdateRole');
+        Gate::policy(User::class, AdminPolicy::class);
         Model::unguard();
     }
 }

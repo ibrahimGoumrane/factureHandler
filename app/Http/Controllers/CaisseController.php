@@ -153,21 +153,10 @@ class CaisseController extends Controller
             'date' => 'required|date|before_or_equal:today',
             'pieceJointe' => 'mimes:png,jpeg,jpg,csv,xls,pdf|max:2048'
         ]);
-
-            $exists = DB::table('caisses')->where('libelle', $validatedData['libelle'])->exists();
-
-            if ($exists) {
-                throw ValidationException::withMessages([
-                    'libelle' => 'The libelle value has already been taken.',
-                ]);
-            }
-
-
             $caisse = Caisse::findOrFail($id);
             // Initialize $pieceJointe as the current file path
             $pieceJointe = $caisse->pieceJointe;
             $existingPieceJointe = ltrim($pieceJointe, '/');
-
             // Check if a new file is being uploaded
             if ($request->hasFile('pieceJointe')) {
                 $file = $request->file('pieceJointe');

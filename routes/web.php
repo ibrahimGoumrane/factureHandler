@@ -11,22 +11,20 @@ Route::view('/team', 'team/index')->name('team');
 Route::get('/team', [\App\Http\Controllers\RegistredUserController::class, 'teamData'])->name('team');
 
 
-Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
-Route::get('/admin/cellule', [\App\Http\Controllers\AdminController::class, 'cellule'])->name('admin.cellule');
-Route::get('/admin/role', [\App\Http\Controllers\AdminController::class, 'role'])->name('admin.role');
-
-
-///////////////need admin authorisation need to work on it
-Route::post('/user/update/{id}', [\App\Http\Controllers\RegistredUserController::class, 'update'])->name('user.update');
-Route::post('/user/delete/{id}', [\App\Http\Controllers\RegistredUserController::class, 'destroy'])->name('user.delete');
-Route::post('/cellule/update/{id}', [\App\Http\Controllers\Cellule::class, 'update'])->name('cellule.update');
-Route::post('/cellule/delete/{id}', [\App\Http\Controllers\Cellule::class, 'destroy'])->name('cellule.delete');
-Route::post('/role/update/{id}', [\App\Http\Controllers\Role::class, 'update'])->name('role.update');
-Route::post('/role/delete/{id}', [\App\Http\Controllers\Role::class, 'destroy'])->name('role.delete');
-
-
 
 Route::middleware('auth')->group(function () {
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+    Route::get('/admin/cellule', [\App\Http\Controllers\AdminController::class, 'cellule'])->name('admin.cellule');
+    Route::get('/admin/role', [\App\Http\Controllers\AdminController::class, 'role'])->name('admin.role');
+    Route::post('/user/storeAdmin', [\App\Http\Controllers\RegistredUserController::class, 'store'])->name('user.store');
+    Route::post('/user/update/{id}', [\App\Http\Controllers\RegistredUserController::class, 'update'])->name('user.update');
+    Route::post('/user/delete/{id}', [\App\Http\Controllers\RegistredUserController::class, 'destroy'])->name('user.delete');
+    Route::post('/cellule/store', [\App\Http\Controllers\Cellule::class, 'store'])->name('cellule.store');
+    Route::post('/cellule/update/{id}', [\App\Http\Controllers\Cellule::class, 'update'])->name('cellule.update');
+    Route::post('/cellule/delete/{id}', [\App\Http\Controllers\Cellule::class, 'destroy'])->name('cellule.delete');
+    Route::post('/role/store', [\App\Http\Controllers\Role::class, 'store'])->name('role.store');
+    Route::post('/role/update/{id}', [\App\Http\Controllers\Role::class, 'update'])->name('role.update');
+    Route::post('/role/delete/{id}', [\App\Http\Controllers\Role::class, 'destroy'])->name('role.delete');
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/caisse/upload/{id}', [\App\Http\Controllers\CaisseController::class, 'upload'])->name('caisse.upload');
     Route::get('/caisse/{year?}/{month?}', [\App\Http\Controllers\CaisseController::class, 'index'])->name('caisse.index');

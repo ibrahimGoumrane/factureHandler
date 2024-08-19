@@ -30,7 +30,7 @@
                             $fmt->setAttribute(NumberFormatter::MAX_FRACTION_DIGITS, 2);
                             $credit = $fmt->format($caisse->credit);
                             $debit = $fmt->format($caisse->debit);
-                            $openModalButton = 'openModalButton'.$caisse->id+2;
+                            $openModalButton = 'openModalButton'.$caisse->id+3;
                         @endphp
                         <tr>
                             <x-caise.C.caise-td class="dt-body-left" :bold="true">{{ $caisse->libelle }}</x-caise.C.caise-td>
@@ -58,7 +58,7 @@
                                 <div class="hidden">
                                     <x-form id="delete"  action="{{ route('caisse.delete' , $caisse->id) }}" method="POST"/>
                                 </div>
-                                <x-caisse-update :id="$caisse->id+2" :libelle="$caisse->libelle" :date="$caisse->date" :debit="$caisse->debit" :credit="$caisse->credit" :AcheterPar="$caisse->AcheterPar" :nature="$caisse->nature" :pieceJointe="$caisse->pieceJointe">
+                                <x-caisse-update :id="$caisse->id+3" :libelle="$caisse->libelle" :date="$caisse->date" :debit="$caisse->debit" :credit="$caisse->credit" :AcheterPar="$caisse->AcheterPar" :nature="$caisse->nature" :pieceJointe="$caisse->pieceJointe">
                                     <x-slot:buttonName>
                                         <button id="{{$openModalButton}}" class="text-black hover:bg-white h-12 w-12 font-bold flex items-center justify-center    rounded-md px-3 py-1.5 text-sm  leading-6  shadow-sm  hover:bg-blue-400/90 focus:outline-none" >
                                             <i class='bx bx-message-square-add'></i>

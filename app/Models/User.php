@@ -63,4 +63,8 @@ class User extends Authenticatable
             'cellule' => $this->cellule,
         ];
     }
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
 }

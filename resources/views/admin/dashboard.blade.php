@@ -2,6 +2,9 @@
 
 
 <div class="rounded-t-lg max-w-[90vw] overflow-hidden flex-1 self-start ">
+        <div class="flex items-center justify-end gap-x-2 mb-4 w-full">
+            <x-adminCreateUser :roles="$roles" :cellules="$cellules" />
+        </div>
     <div class="flex items-start justify-start  overflow-y-auto overflow-x-hidden pr-3  max-w-full max-h-[80vh]">
         <table class="display table-fixed dataTables_wrapper" id="table">
             <x-caise.C.caise-thead>
@@ -18,7 +21,7 @@
                 @if(isset($users) && $users->count() !== 0)
                     @foreach ($users as $user)
                         @php
-                            $openModalButton = 'openAdminButton'.$user->id+2;
+                            $openModalButton = 'openAdminButton'.$user->id;
                          @endphp
                         <tr>
                             <x-caise.C.caise-td class="dt-body-left" :bold="true">{{ $user->id }}</x-caise.C.caise-td>

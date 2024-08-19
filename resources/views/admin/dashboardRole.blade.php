@@ -2,7 +2,10 @@
 
 
 <div class="rounded-t-lg max-w-[90vw] overflow-hidden flex-1 self-start ">
-    <div class="flex items-start justify-start scrollable-container max-w-full max-h-[60vh]">
+        <div class="flex items-center justify-end gap-x-2 mb-4 w-full">
+            <x-adminCreateRole />
+        </div>
+    <div class="flex items-start flex-col justify-start scrollable-container max-w-full max-h-[60vh]">
         <table class="display table-fixed dataTables_wrapper ">
             <x-caise.C.caise-thead>
                 <x-caise.C.caise-th >id</x-caise.C.caise-th>
@@ -13,7 +16,7 @@
                 @if(isset($roles) && $roles->count() !== 0)
                     @foreach ($roles as $role)
                         @php
-                            $openModalButton = 'openAdminRoleButton'.$role->id+2;
+                            $openModalButton = 'openAdminRoleButton'.$role->id;
                         @endphp
                         <tr>
                             <x-caise.C.caise-td class="dt-body-left" >{{ $role->id }}</x-caise.C.caise-td>

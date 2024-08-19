@@ -26,7 +26,7 @@
         Ici vous Pouvez Modifier un enregistrement de caisse
     </x-slot:title>
     @auth
-    <x-form action="{{ route('caisse.update', $id-2) }}" method="POST" :files="true">
+    <x-form action="{{ route('caisse.update', $id-3) }}" method="POST" :files="true">
         <x-input name="libelle" type="text" :required="true" label="Libelle" autocomplete="libelle" :value="$libelle"  />
         <x-input name="nature" type="text" :required="true" label="Nature" autocomplete="nature" :value="$nature"  />
         <div class="flex items-center justify-center gap-2">

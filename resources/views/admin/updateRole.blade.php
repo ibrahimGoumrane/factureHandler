@@ -16,7 +16,7 @@
         Ici vous Pouvez Modifier un Role
     </x-slot:title>
     @auth
-        <x-form action="{{ route('role.update', $id-2) }}" method="POST" :files="true">
+        <x-form action="{{ route('role.update', $id) }}" method="POST" :files="true">
             <x-input name="libelle" type="text" :required="true" label="Libelle" autocomplete="Libelle" :value="$libelle" />
             <x-buttonSubmit>
                 Enregistrer

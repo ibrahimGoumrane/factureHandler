@@ -26,18 +26,18 @@
         Ici vous Pouvez Modifier un utilisateur
     </x-slot:title>
     @auth
-        <x-form action="{{ route('user.update', $id-2) }}" method="POST" :files="true">
-            <x-input name="first_name" type="text" :required="true" label="First Name" autocomplete="first_name" :value="$first_name" />
-            <x-input name="last_name" type="text" :required="true" label="Last Name" autocomplete="last_name" :value="$last_name" />
-            <x-input name="email" type="email" :required="true" label="Email" autocomplete="email" :value="$email" />
-            <x-select name="cellule_id" :options="$cellules" :required="true" label="Cellule" :value="$cellule_id" />
-            <x-select name="role_id" :options="$roles" :required="true" label="Role" :value="$role_id" />
+        <x-form action="{{ route('user.update', $id) }}" method="POST" :files="true">
+            <x-input name="first_name" type="text" :required="true" label="First Name" autocomplete="first_name" value="{{$first_name}}" />
+            <x-input name="last_name" type="text" :required="true" label="Last Name" autocomplete="last_name" value="{{$last_name}}" />
+            <x-input name="email" type="email" :required="true" label="Email" autocomplete="email" value="{{$email}}" />
+            <x-select name="cellule_id" :options="$cellules" :required="true" label="Cellule" value="{{$cellule_id}}" />
+            <x-select name="role_id" :options="$roles" :required="true" label="Role" value="{{$role_id}}" />
             <div class="mb-4">
                 <label class="block text-sm font-medium leading-6 text-gray-900" id="containerPieceInv2">
                     Profile Photo
                 </label>
                 <div class="hidden" id="containerPiece2">
-                    <x-input name="profile_photo_path" type="file" :required="false" label="Profile Photo" :value="$profile_photo_path" />
+                    <x-input name="profile_photo_path" type="file" :required="false" label="Profile Photo" value="{{$profile_photo_path}}" />
                 </div>
                 @if($profile_photo_path)
                     <p class="mt-2 text-sm text-gray-500 flex gap-10 items-center justify-center">

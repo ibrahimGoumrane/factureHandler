@@ -1,6 +1,6 @@
-<x-modal openModalBtn="openModalBtn4" closeModalBtn="closeModalBtn4" authenticationModal="authenticationModal4">
+<x-modal openModalBtn="openModalBtn3" closeModalBtn="closeModalBtn3" authenticationModal="authenticationModal3">
     <x-slot:buttonName>
-        <button id="openModalBtn4" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+        <button id="openModalBtn3" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
             Afficher le resume du mois
         </button>
     </x-slot:buttonName>

@@ -10,7 +10,6 @@
 /* Specify fixed width for all columns */
 .table-fixed th,
 .table-fixed td {
-    width: 200px; /* Fixed width for all columns */
     word-wrap: break-word; /* Ensure content wraps within the cell */
     border: 1px solid #ccc; /* Optional: for visual clarity */
     padding: 8px; /* Optional: for spacing */

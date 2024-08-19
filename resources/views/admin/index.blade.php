@@ -1,18 +1,11 @@
-@php
-    use Carbon\Carbon;
 
-    Carbon::setLocale('fr_MA');
-    $date = Carbon::now()->translatedFormat('l j F Y');
-    $hourAndMinutes = Carbon::now()->addHour()->translatedFormat('H:i');
-
-@endphp
 <x-layout>
     <div class="mx-auto  flex items-start justify-start flex-col overflow-hidden sm:px-6 lg:px-8 pt-10">
         <div class="flex items-center justify-center flex-col gap-2">
             <h1 class="text-slate-900/80 text-opacity-95 font-bold text-3xl text-center flex items-center justify-between flex-col w-full ">
                         <span class="self-end">
-                            <span class="w-full flex  ">
-                                <span class=" text-xl  leading-6 text-blue-500 "><span class="text-slate-900/80 font-medium pl-2 text-2xl  drop-shadow-2x">{{$date}}  {{$hourAndMinutes}}</span> </span>
+                            <span class="w-full flex">
+                                   <span id="dateTime" class="text-slate-900/80 font-medium pl-2 text-2xl drop-shadow-2x"></span>
                             </span>
                         </span>
                 <span class="self-start">
@@ -64,7 +57,8 @@
 
 
 <script>
-    document.querySelectorAll('[aria-tabs]').forEach(tab => {
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('[aria-tabs]').forEach(tab => {
         tab.addEventListener('click', function() {
             document.querySelectorAll('[aria-tabs]').forEach(t => t.classList.remove('active', 'text-white', 'bg-blue-700', 'dark:bg-blue-600'));
             this.classList.add('active', 'text-white', 'bg-blue-700', 'dark:bg-blue-600');
@@ -77,4 +71,14 @@
             });
         });
     });
+        function updateDateTime() {
+            const dateTimeElement = document.getElementById('dateTime');
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            dateTimeElement.textContent = now.toLocaleDateString('fr-FR', options);
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000); // Update every minute
+    });
+
 </script>

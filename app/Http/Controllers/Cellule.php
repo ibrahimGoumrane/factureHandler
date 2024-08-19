@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Caisse;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use function auth;
 use function file_exists;
@@ -36,7 +38,11 @@ class Cellule extends Controller
      */
     public function store(Request $request)
     {
-
+        $attrs = $request->validate([
+            'libelle' => 'required|string|max:255',
+        ]);
+        \App\Models\Cellule::create($attrs);
+        return redirect()->back()->with('success', 'cellule est ajouter avec success');
     }
 
 
@@ -53,6 +59,8 @@ class Cellule extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('view', User::class);
+
         $validatedData = $request->validate([
             'libelle' => 'required|string|max:255',
         ]);
@@ -60,7 +68,7 @@ class Cellule extends Controller
         $exists = DB::table('cellules')->where('libelle', $validatedData['libelle'])->exists();
         if ($exists) {
             throw ValidationException::withMessages([
-                'libelle' => 'We can\'t have two cellules with the same name',
+                'libelle' => 'cellule existe deja',
             ]);
         }
 
@@ -70,19 +78,21 @@ class Cellule extends Controller
             'libelle' => $validatedData['libelle'],
         ]);
 
-        return redirect()->route('caisse.index')
-            ->with('success', 'Mise à jour avec succès de cellule.');
+        return redirect()->back()->with('success', 'cellule est modifier avec success');
+
     }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
+        Gate::authorize('view', User::class);
+
         $cellule = \App\Models\Cellule::findOrFail($id);
 
         $cellule->delete();
 
-        return redirect()->route('caisse.index')
-            ->with('success', 'Suppression avec succès de cellule.');
+        return redirect()->back()->with('success', 'cellule est supprimer avec success');
+
     }
 }
