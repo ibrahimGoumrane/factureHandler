@@ -23,7 +23,7 @@
             <th class="px-4 py-2 text-left">Month/Year</th>
             <th class="px-4 py-2 text-left">Debit</th>
             <th class="px-4 py-2 text-left">Credit</th>
-            <th class="px-4 py-2 text-left">Total (Debit - Credit)</th>
+            <th class="px-4 py-2 text-left">Total (Credit - Debit)</th>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -83,7 +83,7 @@
                 const returnedMarkups = Object.entries(monthlyTotals).map(([month, totals], index) => {
                     const debit = totals.debit || 0;
                     const credit = totals.credit || 0;
-                    const total = debit - credit;
+                    const total = credit - debit;
 
                     // Add to yearly total
                     yearlyTotal += total;
@@ -94,8 +94,8 @@
                     return `
                         <tr class="${rowClass}">
                             <td class="border px-4 py-2 text-right">${month} / ${year}</td>
-                            <td class="border px-4 py-2 text-right">${debit.toFixed(2)} €</td>
-                            <td class="border px-4 py-2 text-right">${credit.toFixed(2)} €</td>
+                            <td class="border px-4 py-2 text-right">${debit.toFixed(2)} DH</td>
+                            <td class="border px-4 py-2 text-right">${credit.toFixed(2)} DH</td>
                             <td class="border px-4 py-2 font-bold text-right">${total.toFixed(2)} DH</td>
                         </tr>
                     `;
